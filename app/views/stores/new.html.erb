@@ -1,0 +1,21 @@
+<%= form_with model: @store do |form| %>
+  <div>
+    <%= form.label :email %><br>
+    <%= form.text_field :email %>
+    <% @store.errors.full_messages_for(:email).each do |message| %>
+      <div><%= message %></div>
+    <% end %>
+  </div>
+
+  <div>
+    <%= form.label :password %><br>
+    <%= form.text_area :passwordHash %><br>
+    <% @store.errors.full_messages_for(:passwordHash).each do |message| %>
+      <div><%= message %></div>
+    <% end %>
+  </div>
+
+  <div>
+    <%= form.submit %>
+  </div>
+<% end %>

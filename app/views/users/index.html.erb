@@ -1,0 +1,9 @@
+<h1>Users</h1>
+<ul>
+  <% @users.each do |user| %>
+    <li class="user">
+   <%=  user.email %>
+    </li>
+  <% end %>
+</ul>
+<%= link_to "Sign up", new_user_path %>

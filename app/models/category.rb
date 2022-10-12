@@ -1,4 +1,4 @@
 class Category < ApplicationRecord
-  belongs_to :store
+  belongs_to :item
   has_many :types
 end

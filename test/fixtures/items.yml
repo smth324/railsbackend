@@ -2,8 +2,8 @@
 
 one:
   name: MyString
-  item: one
+  store: one
 
 two:
   name: MyString
-  item: two
+  store: two
