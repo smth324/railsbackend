@@ -1,2 +1,10 @@
-<h1>Types#index</h1>
-<p>Find me in app/views/types/index.html.erb</p>
+<h1>Types</h1>
+<ul>
+  <% @types.each do |type| %>
+    <li class="type">
+   <%= type.name %>
+    
+    </li>
+  <% end %>
+</ul>
+<%= link_to "New Type", new_type_path %>

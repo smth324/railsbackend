@@ -1,16 +1,16 @@
 <%= form_with model: @store do |form| %>
   <div>
-    <%= form.label :email %><br>
-    <%= form.text_field :email %>
-    <% @store.errors.full_messages_for(:email).each do |message| %>
+    <%= form.label :name %><br>
+    <%= form.text_field :name %>
+    <% @store.errors.full_messages_for(:name).each do |message| %>
       <div><%= message %></div>
     <% end %>
   </div>
 
   <div>
-    <%= form.label :password %><br>
-    <%= form.text_area :passwordHash %><br>
-    <% @store.errors.full_messages_for(:passwordHash).each do |message| %>
+    <%= form.label :user_id %><br>
+    <%= form.text_area :user_id %><br>
+    <% @store.errors.full_messages_for(:user_id).each do |message| %>
       <div><%= message %></div>
     <% end %>
   </div>
