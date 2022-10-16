@@ -2,7 +2,7 @@
 <ul>
   <% @stores.each do |store| %>
     <li class="store">
-   <%=  store.name %>
+    <%= link_to store.name, store %>
      <% store.items.each do |item| %>
   <p>
     <strong>Name:</strong>

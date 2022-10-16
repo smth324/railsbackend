@@ -2,7 +2,7 @@
 <ul>
   <% @types.each do |type| %>
     <li class="type">
-   <%= type.name %>
+   <%= link_to type.name, type %>
     
     </li>
   <% end %>

@@ -1,0 +1,13 @@
+<h1><%= @store.name %></h1>
+
+<ul>
+  <li><%= link_to "Destroy", store_path(@store), data: {
+                    turbo_method: :delete,
+                    turbo_confirm: "Are you sure?"
+                  } %></li>
+</ul>
+
+<h2>Items</h2>
+<% @store.items.each do |item| %>
+<%= item.name %>
+<%end%>

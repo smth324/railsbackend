@@ -20,6 +20,11 @@ class TypesController < ApplicationController
       render :new, status: :unprocessable_entity
     end
   end
+  def destroy
+    @type = Type.find(params[:id])
+    @type.destroy
+    redirect_to types_path, status: :see_other
+  end
   private
   def category_params
     params.require(:type).permit(:name, :category_id)

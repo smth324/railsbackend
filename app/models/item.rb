@@ -1,4 +1,4 @@
 class Item < ApplicationRecord
   belongs_to :store
-  has_many :categories
+  has_many :categories, dependent: :destroy
 end

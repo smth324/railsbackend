@@ -20,6 +20,11 @@ class StoresController < ApplicationController
       render :new, status: :unprocessable_entity
     end
   end
+  def destroy
+    @store = Store.find(params[:id])
+    @store.destroy
+    redirect_to stores_path, status: :see_other
+  end
   private
   def store_params
     params.require(:store).permit(:name, :user_id)

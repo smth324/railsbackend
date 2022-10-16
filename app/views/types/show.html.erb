@@ -1,0 +1,8 @@
+<h1><%= @type.name %></h1>
+
+<ul>
+  <li><%= link_to "Destroy", type_path(@type), data: {
+                    turbo_method: :delete,
+                    turbo_confirm: "Are you sure?"
+                  } %></li>
+</ul>
