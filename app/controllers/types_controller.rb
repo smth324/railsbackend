@@ -1,32 +1,38 @@
 class TypesController < ApplicationController
+  skip_before_action :verify_authenticity_token
+
   def index
-    @types = Type.all
+     types= Type.all
+     render json: types
   end
 
   def show
-    @type = Type.find(params[:id])
-  end
-
-  def new
-    @type = Type.new
+    type = Type.find(params[:id])
+    render json: type
   end
 
   def create
-    @type = Type.new(category_params)
+    type = Type.new(name: params[:name], price: params[:price], unit: params[:unit], category_id: params[:category_id])
 
-    if @type.save
-      redirect_to @type
+    if type.save
+      render json: type, status: :created
     else
-      render :new, status: :unprocessable_entity
+      render json: type.errors, status: :unprocessable_entity
     end
   end
+
   def destroy
-    @type = Type.find(params[:id])
-    @type.destroy
+    type = Type.find(params[:id])
+    type.destroy
     redirect_to types_path, status: :see_other
   end
-  private
-  def category_params
-    params.require(:type).permit(:name, :category_id)
+
+  def update
+    type = Type.find(params[:id])
+    if type.update(name: params[:name], price: params[:price], unit: params[:unit])
+      redirect_to type
+    else
+      render json: type.errors, status: :unprocessable_entity
+    end
   end
 end

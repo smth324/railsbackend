@@ -1,32 +1,29 @@
 class StoresController < ApplicationController
+  skip_before_action :verify_authenticity_token
+
   def index
-    @stores = Store.all
+     stores= Store.all
+     render json: stores
   end
 
   def show
-    @store = Store.find(params[:id])
-  end
-
-  def new
-    @store = Store.new
+    store = Store.find(params[:id])
+    render json: store
   end
 
   def create
-    @store = Store.new(store_params)
+    store = Store.new(name: params[:name], user_id: params[:user_id])
 
-    if @store.save
-      redirect_to @store
+    if store.save
+      render json: store, status: :created
     else
-      render :new, status: :unprocessable_entity
+      render json: store.errors, status: :unprocessable_entity
     end
   end
+
   def destroy
-    @store = Store.find(params[:id])
-    @store.destroy
+    store = Store.find(params[:id])
+    store.destroy
     redirect_to stores_path, status: :see_other
-  end
-  private
-  def store_params
-    params.require(:store).permit(:name, :user_id)
   end
 end

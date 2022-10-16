@@ -1,32 +1,38 @@
 class ItemsController < ApplicationController
+  skip_before_action :verify_authenticity_token
+
   def index
-    @items = Item.all
+     items= Item.all
+     render json: items
   end
 
   def show
-    @item = Item.find(params[:id])
-  end
-
-  def new
-    @item = Item.new
+    item = Item.find(params[:id])
+    render json: item
   end
 
   def create
-    @item = Item.new(item_params)
+    item = Item.new(name: params[:name], store_id: params[:store_id])
 
-    if @item.save
-      redirect_to @item
+    if item.save
+      render json: item, status: :created
     else
-      render :new, status: :unprocessable_entity
+      render json: item.errors, status: :unprocessable_entity
     end
   end
+
   def destroy
-    @item = Item.find(params[:id])
-    @item.destroy
+    item = Item.find(params[:id])
+    item.destroy
     redirect_to items_path, status: :see_other
   end
-  private
-  def item_params
-    params.require(:item).permit(:name, :store_id)
+
+  def update
+    item = Item.find(params[:id])
+    if item.update(name: params[:name])
+      redirect_to item
+    else
+      render json: item.errors, status: :unprocessable_entity
+    end
   end
 end

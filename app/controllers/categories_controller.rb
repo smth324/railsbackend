@@ -1,32 +1,38 @@
 class CategoriesController < ApplicationController
+  skip_before_action :verify_authenticity_token
+
   def index
-    @categories = Category.all
+     categories= Category.all
+     render json: categories
   end
 
   def show
-    @category = Category.find(params[:id])
-  end
-
-  def new
-    @category = Category.new
+    category = Category.find(params[:id])
+    render json: category
   end
 
   def create
-    @category = Category.new(category_params)
+    category = Category.new(name: params[:name], item_id: params[:item_id])
 
-    if @category.save
-      redirect_to @category
+    if category.save
+      render json: category, status: :created
     else
-      render :new, status: :unprocessable_entity
+      render json: category.errors, status: :unprocessable_entity
     end
   end
+
   def destroy
-    @category = Category.find(params[:id])
-    @category.destroy
+    category = Category.find(params[:id])
+    category.destroy
     redirect_to categories_path, status: :see_other
   end
-  private
-  def category_params
-    params.require(:category).permit(:name, :item_id)
+
+  def update
+    category = Category.find(params[:id])
+    if category.update(name: params[:name])
+      redirect_to category
+    else
+      render json: category.errors, status: :unprocessable_entity
+    end
   end
 end
