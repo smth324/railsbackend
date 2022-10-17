@@ -8,6 +8,21 @@
   </div>
 
   <div>
+    <%= form.label :price %><br>
+    <%= form.text_field :price %>
+    <% @type.errors.full_messages_for(:price).each do |message| %>
+      <div><%= message %></div>
+    <% end %>
+  </div>
+  <div>
+    <%= form.label :unit %><br>
+    <%= form.text_field :unit %>
+    <% @type.errors.full_messages_for(:unit).each do |message| %>
+      <div><%= message %></div>
+    <% end %>
+  </div>
+
+  <div>
     <%= form.label :category_id %><br>
     <%= form.text_area :category_id %><br>
     <% @type.errors.full_messages_for(:category_id).each do |message| %>

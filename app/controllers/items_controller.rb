@@ -1,9 +1,21 @@
 class ItemsController < ApplicationController
+  before_action :authenticate_user!
+  before_action :check_ownership, only: [:destory, :update, :show]
   skip_before_action :verify_authenticity_token
 
+  def check_ownership
+    unless current_user.id == Item.find(params[:id]).store.user_id
+      head :unauthorized
+    end
+  end
+
   def index
-     items= Item.all
+     items= Item.all.filter{|item| item.store.user_id == current_user.id}
      render json: items
+  end
+
+  def new
+    @item = Item.new
   end
 
   def show
@@ -12,7 +24,10 @@ class ItemsController < ApplicationController
   end
 
   def create
-    item = Item.new(name: params[:name], store_id: params[:store_id])
+    unless current_user.id == Store.find(params[:item][:store_id]).user_id
+      head :unauthorized
+    end
+    item = Item.new(name: params[:item][:name], store_id: params[:item][:store_id])
 
     if item.save
       render json: item, status: :created

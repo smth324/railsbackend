@@ -11,6 +11,10 @@ class UsersController < ApplicationController
     render json: user
   end
 
+  def signout 
+    
+  end
+
   def create
     user = User.new(email: params[:email], password: params[:password])
 
@@ -20,4 +24,5 @@ class UsersController < ApplicationController
       render json: user.errors, status: :unprocessable_entity
     end
   end
+
 end
