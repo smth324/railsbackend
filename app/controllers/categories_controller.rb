@@ -4,13 +4,13 @@ class CategoriesController < ApplicationController
   skip_before_action :verify_authenticity_token
 
   def check_ownership
-    unless current_user.id == Category.find(params[:id]).item.store.user_id
+    unless current_user.id == Category.find(params[:id]).item.store.user_id || current_user.store_id == Category.find(params[:id]).item.store.id
       head :unauthorized
     end
   end
 
   def index
-     categories= Category.all.filter{|category| category.item.store.user_id == current_user.id}
+     categories= Category.all.filter{|category| category.item.store.user_id == current_user.id || category.item.store.id == current_user.store_id}
      render json: categories
   end
 

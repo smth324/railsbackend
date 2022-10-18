@@ -4,7 +4,7 @@ class StoresController < ApplicationController
   skip_before_action :verify_authenticity_token
 
   def check_ownership
-    unless current_user.id == Store.find(params[:id]).user_id
+    unless current_user.id == Store.find(params[:id]).user_id || current_user.store_id == Store.find(params[:id]).id
       head :unauthorized
     end
   end
@@ -14,8 +14,7 @@ class StoresController < ApplicationController
   end
 
   def index
-     stores = Store.all.filter{|store| store.user_id == current_user.id}
-     puts stores
+     stores = Store.all.filter{|store| store.user_id == current_user.id || store.id === current_user.store_id}
      render json: stores
   end
 

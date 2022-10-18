@@ -4,7 +4,7 @@ class TypesController < ApplicationController
   skip_before_action :verify_authenticity_token
 
   def check_ownership
-    unless current_user.id == Type.find(params[:id]).category.item.store.user_id
+    unless current_user.id == Type.find(params[:id]).category.item.store.user_id || current_user.store_id == Type.find(params[:id]).category.item.store.id
       head :unauthorized
     end
   end
@@ -14,7 +14,7 @@ class TypesController < ApplicationController
   end
 
   def index
-     types= Type.all.filter{|type| type.category.item.store.user_id == current_user.id}
+     types= Type.all.filter{|type| type.category.item.store.user_id == current_user.id || type.category.item.store.id == current_user.store_id}
      render json: types
   end
 

@@ -15,6 +15,15 @@ class UsersController < ApplicationController
     
   end
 
+  def update
+    user = User.find(params[:id])
+    if user.update(store_id: params[:store_id])
+      redirect_to user
+    else
+      render json: user.errors, status: :unprocessable_entity
+    end
+  end
+
   def create
     user = User.new(email: params[:email], password: params[:password])
 
@@ -24,5 +33,4 @@ class UsersController < ApplicationController
       render json: user.errors, status: :unprocessable_entity
     end
   end
-
 end

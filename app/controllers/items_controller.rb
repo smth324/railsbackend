@@ -4,13 +4,13 @@ class ItemsController < ApplicationController
   skip_before_action :verify_authenticity_token
 
   def check_ownership
-    unless current_user.id == Item.find(params[:id]).store.user_id
+    unless current_user.id == Item.find(params[:id]).store.user_id || current_user.store_id == Item.find(params[:id]).store.id
       head :unauthorized
     end
   end
 
   def index
-     items= Item.all.filter{|item| item.store.user_id == current_user.id}
+     items= Item.all.filter{|item| item.store.user_id == current_user.id || item.store.id == current_user.store_id}
      render json: items
   end
 
