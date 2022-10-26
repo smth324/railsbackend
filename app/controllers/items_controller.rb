@@ -1,6 +1,4 @@
 class ItemsController < ApplicationController
-  before_action :authenticate_user!
-  before_action :check_ownership, only: [:destory, :update, :show]
   skip_before_action :verify_authenticity_token
 
   def check_ownership
@@ -20,13 +18,10 @@ class ItemsController < ApplicationController
 
   def show
     item = Item.find(params[:id])
-    render json: item
+    render json: item.to_json(include:  {categories: {include: :types} })
   end
 
   def create
-    unless current_user.id == Store.find(params[:item][:store_id]).user_id
-      head :unauthorized
-    end
     item = Item.new(name: params[:item][:name], store_id: params[:item][:store_id])
 
     if item.save
@@ -45,7 +40,7 @@ class ItemsController < ApplicationController
   def update
     item = Item.find(params[:id])
     if item.update(name: params[:name])
-      redirect_to item
+      render json: item
     else
       render json: item.errors, status: :unprocessable_entity
     end

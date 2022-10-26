@@ -1,6 +1,4 @@
 class StoresController < ApplicationController
-  before_action :authenticate_user!
-  before_action :check_ownership, except: [:index, :new, :create]
   skip_before_action :verify_authenticity_token
 
   def check_ownership
