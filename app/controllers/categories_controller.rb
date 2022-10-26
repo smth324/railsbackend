@@ -1,6 +1,4 @@
 class CategoriesController < ApplicationController
-  before_action :authenticate_user!
-  before_action :check_ownership, only: [:destory, :update, :show]
   skip_before_action :verify_authenticity_token
 
   def check_ownership
@@ -24,13 +22,10 @@ class CategoriesController < ApplicationController
   end
 
   def create
-    unless current_user.id == Item.find(params[:category][:item_id]).store.user_id
-      head :unauthorized
-    end
     category = Category.new(name: params[:category][:name], item_id: params[:category][:item_id])
 
     if category.save
-      render json: category, status: :created
+      render json: category.to_json(include:  :types), status: :created
     else
       render json: category.errors, status: :unprocessable_entity
     end
@@ -45,7 +40,7 @@ class CategoriesController < ApplicationController
   def update
     category = Category.find(params[:id])
     if category.update(name: params[:name])
-      redirect_to category
+      render json: category.to_json(include:  :types)
     else
       render json: category.errors, status: :unprocessable_entity
     end
