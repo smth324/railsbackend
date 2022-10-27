@@ -13,7 +13,6 @@ gem 'rack-cors'
 
 # Use Postgres as the database for Active Record
 gem 'pg'
-gem 'sqlite3'
 gem 'yaml_db'
 # Use the Puma web server [https://github.com/puma/puma]
 gem "puma", "~> 5.0"
