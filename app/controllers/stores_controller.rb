@@ -22,7 +22,7 @@ class StoresController < ApplicationController
   end
 
   def create
-    store = Store.new(name: params[:store][:name], user_id: current_user.id)
+    store = Store.new(name: "Store 1", user_id: 1)
     if store.save
       render json: store, status: :created
     else
